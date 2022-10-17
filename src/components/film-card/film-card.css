@@ -1,0 +1,67 @@
+.film-card {
+    display: flex;
+    height:278px
+}
+
+.film-card__descr {
+    padding: 12px 20px 0 !important;
+    gap: 7px;
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 185px)
+}
+
+.film-card__rate  {
+    position: absolute;
+    right: 10px;
+    bottom: 7px;
+
+    white-space: nowrap;
+}
+
+.film-card__rate li{
+    font-size: 17px;
+}
+
+
+
+.film-card__title {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+.film-card__date{
+    color: #827E7E;
+}
+
+.film-card__overview {
+    font-size: 12px;
+    line-height: 22px;
+    overflow: hidden;
+}
+
+.film-card__poster {
+    width: 185px;
+}
+
+.film-card__circle-rate {
+    position: absolute;
+    top:12px;
+    right: 9px;
+    width: 30px;
+    height: 30px;
+}
+
+.circle-rate__rate {
+    top: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    line-height: 22px;
+}
+
+.ant-card-body {
+    padding: 0px !important;
+}

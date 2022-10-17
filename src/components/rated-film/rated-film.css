@@ -1,0 +1,12 @@
+.films-wrapper{
+    min-height: calc(100vh - 78px);
+    box-sizing: border-box;
+    background:white;
+    padding-top: 20px;
+}
+
+.films__spinner {
+    width: 50px;
+
+    margin: 0 auto;
+}

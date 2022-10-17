@@ -1,0 +1,18 @@
+
+
+.input {
+    border: 1px solid #D9D9D9;
+    border-radius: 4px;
+}
+.search-films__input {
+    width:100%;
+    padding: 9px 9px 9px 12px;
+
+    /*margin-bottom!!!!!!!!!!!!!!!!!*/
+}
+.input::placeholder {
+    color: rgba(0, 0, 0, 0.25);
+}
+.input:focus {
+    border-color: transparent
+}
