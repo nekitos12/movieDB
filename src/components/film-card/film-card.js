@@ -12,14 +12,9 @@ export default class FilmCard extends React.Component {
     return spaceBeforeCut > 0 ? `${text.slice(0, spaceBeforeCut)}...` : text
   }
 
-  async postRate(id, rate) {
-    await this.props.postFilmRate(id, rate)
-  }
-
   render() {
     const { original_title, overview, poster_path, release_date, id, genre_ids } = this.props.film
-    const { rate, genres } = this.props
-
+    const { rate, genres, postFilmRate } = this.props
     // eslint-disable-next-line global-require
     const withoutPoster = `${require('../../img/заглушка.jpg')}`
     const overviewText = this.getCutText(overview)
@@ -66,7 +61,7 @@ export default class FilmCard extends React.Component {
               count={10}
               className="film-card__rate"
               defaultValue={rate}
-              onChange={(value) => this.postRate(id, value)}
+              onChange={(value) => postFilmRate(id, value)}
             />
           </div>
         </Card>

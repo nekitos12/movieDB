@@ -41,6 +41,7 @@ export default class SearchFilms extends Component {
   componentDidMount() {
     this.giveRatedFilms = this.props.giveRatedFilms.bind(this)
     this.postFilmRate = this.postFilmRate.bind(this)
+    this.giveRatedFilms()
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -48,10 +49,7 @@ export default class SearchFilms extends Component {
       this.debounceFunc()
     }
     this.state.ratedFilms?.forEach((film) => {
-      if (
-        (prevState.ratedFilms?.find((f) => f.id === film.id)?.rating !== film.rating || !prevState.ratedFilms) &&
-        this.state.filmData.results.length
-      ) {
+      if (prevState.ratedFilms?.find((f) => f.id === film.id)?.rating !== film.rating || !prevState.ratedFilms) {
         this.giveRatedFilms()
       }
     })
