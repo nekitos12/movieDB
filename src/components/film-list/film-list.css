@@ -2,10 +2,18 @@
     display: flex;
     flex-wrap: wrap;
     gap:35px;
+    margin-bottom: 36px
 
 }
 .films-list__item {
     width: calc(100% - 107px);
     flex: 1 1 40%;
     /*margin-bottom: 35px;*/
+}
+
+@media (max-width : 1200px) {
+    .films-list__item{
+        flex: 1 1 100%;
+    }
+
 }

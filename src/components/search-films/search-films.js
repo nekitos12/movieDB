@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import FilmList from '../film-list'
-import {Alert, Pagination, Spin} from "antd";
+import {Alert,  Spin} from "antd";
+import PropTypes from 'prop-types'
 import { LoadingOutlined } from '@ant-design/icons';
 import './search-films.css'
 import {debounce} from "lodash";
 import SwapiService from "../../service/swapi-service";
+import FilmListPagination from "./../film-list-pagination"
 
 const antIcon = (
   <LoadingOutlined
@@ -23,24 +25,31 @@ export default class SearchFilms extends Component {
 
   state ={
     searchInput:'',
-    loading:false,
-    alert: this.basePhrase,
+    isLoading:false,
+    isAlert: this.basePhrase,
     filmData: {
       results: [],
       total_pages: 1
     },
     currentPage:1,
-    rate:[],
   }
 
   debounceFunc = debounce(this.getFilmArray,500)
+  componentDidMount() {
+    this.giveRatedFilms = this.props.giveRatedFilms.bind(this)
+    this.postFilmRate = this.postFilmRate.bind(this)
+  }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
 
-    if (prevState.searchInput!== this.state.searchInput ||prevState.currentPage!==this.state.currentPage) {
+    if (prevState.searchInput!== this.state.searchInput ||prevState.currentPage!==this.state.currentPage ) {
       this.debounceFunc()
-      // this.props.giveRatedFilms()
     }
+    this.state.ratedFilms?.forEach(film=>{
+      if ((prevState.ratedFilms?.find(f=> f.id===film.id)?.rating!==film.rating || !prevState.ratedFilms) && this.state.filmData.results.length){
+        this.giveRatedFilms()
+      }
+    })
   }
 
 
@@ -59,7 +68,7 @@ export default class SearchFilms extends Component {
           filmData: {
             results:[]
           },
-          alert: true,
+          isAlert: true,
         }
       })
     }
@@ -76,33 +85,29 @@ export default class SearchFilms extends Component {
           this.setState(() => {
             return {
               filmData: res,
-              alert: null,
+              isAlert: null,
             }
           })
         })
-        .catch(rej=>{
-          throw new Error
+        .catch(()=>{
+          throw new Error()
         }
         )
       this.setLoading(false)
 
     }
     catch (e){
-      console.log(e)
       this.setLoading(false)
       this.setState(()=>{
         return {
           filmData: {
             results:[]
           },
-          alert: true,
+          isAlert: true,
         }
       })
     }
   }
-
-
-
 
   onInputChange =()=>(e)=>{
     this.setLoading()
@@ -131,9 +136,17 @@ export default class SearchFilms extends Component {
     })
   }
 
+  async postFilmRate (id, rate){
+    await this.props.postFilmRate(id,rate)
+    await this.giveRatedFilms()
+  }
+
   render (){
-    const basePhrase = !this.state.searchInput ? this.basePhrase:null
-    const emptySearch = this.state.alert? this.searchError:null
+    const {searchInput, isLoading, isAlert, filmData, ratedFilms, currentPage} =this.state
+    const {apiKey, guestSessionId} = this.props
+
+    const basePhrase = !searchInput ? this.basePhrase:null
+    const emptySearch = isAlert? this.searchError:null
     return (
       <div className="search-films app-wrapper__inner">
         <input
@@ -141,9 +154,9 @@ export default class SearchFilms extends Component {
           placeholder="Type to search..."
           onChange={this.onInputChange()}
           className="search-films__input input"
-          value={this.state.searchInput}
+          value={searchInput}
         />
-        {this.state.isLoading
+        {isLoading
           ?
           <div className="films__spinner">
             <Spin indicator={antIcon}/>
@@ -152,17 +165,29 @@ export default class SearchFilms extends Component {
           <div className="search-films__list">
             {basePhrase || emptySearch}
             <FilmList
-              filmData ={this.state.filmData.results}
-              postFilmRate={this.props.postFilmRate}
-              apiKey={this.props.apiKey}
-              guest_session_id={this.props.guest_session_id}
-              ratedFilms={this.props.ratedFilms?.results}
+              filmData ={filmData.results}
+              postFilmRate={this.postFilmRate}
+              apiKey={apiKey}
+              guestSessionId={guestSessionId}
+              ratedFilms={ratedFilms}
             />
-            {this.state.filmData.results.length?<Pagination onChange={this.onPageChange} defaultPageSize ={20} defaultCurrent={this.state.currentPage} total={this.state.filmData.total_pages*20}/>:null}
+            {filmData.results.length
+              ?
+              <FilmListPagination
+                onChange={this.onPageChange}
+                defaultCurrent={currentPage}
+                total={filmData.total_pages*20}
+              />:null}
           </div>
         }
-        {/*{elements?<Pagination onChange={onPageChange} defaultPageSize ={20} defaultCurrent={startPage || currentPage} total={totalPages*20}/>:null}*/}
       </div>
     )
   }
+}
+
+SearchFilms.defaultProps = {
+}
+SearchFilms.propTypes = {
+  postFilmRate: PropTypes.func.isRequired,
+  giveRatedFilms: PropTypes.func.isRequired,
 }

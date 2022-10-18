@@ -7,7 +7,7 @@ export default class SwapiService {
     const res = await fetch(`${this._apiBase}${url}`)
 
     if (!res.ok){
-      throw new Error
+      throw new Error('ошибка в получении данных')
     }
 
     return await res.json()
