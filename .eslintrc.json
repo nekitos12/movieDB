@@ -1,0 +1,81 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "ignorePatterns": ["node_modules", "dist", "build"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "airbnb",
+        "plugin:prettier/recommended",
+        "prettier"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module",
+        "requireConfigFile": false,
+        "babelOptions": {
+            "parserOpts": {
+                "plugins": ["jsx"]
+            }
+        }
+    },
+    "plugins": ["react", "prettier", "import"],
+    "parser": "@babel/eslint-parser",
+    "rules": {
+        "prettier/prettier": "error",
+        "linebreak-style": [0, "unix"],
+        "quotes": ["error", "single"],
+        "semi": 0,
+        "indent": "off",
+        "react/react-in-jsx-scope": "off",
+        "react/prop-types": 0,
+        "react/destructuring-assignment": [0, "always"],
+        "react/button-has-type": "off",
+        "no-plusplus": "off",
+        "camelcase": "off",
+        "react/forbid-prop-types": "off",
+        "class-methods-use-this": "off",
+        "react/jsx-props-no-spreading": "off",
+        "react/state-in-constructor":"off",
+        "react/prefer-stateless-function": "off",
+        "consistent-return": "off",
+        "no-underscore-dangle": "off",
+        "no-return-await": "off",
+        "import/no-unresolved": [2, { "caseSensitive": false }],
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "import/order": [
+            2,
+            {
+                "groups": [
+                    "builtin",
+                    "external",
+                    "internal",
+                    "parent",
+                    "sibling",
+                    "index"
+                ],
+                "newlines-between": "always"
+            }
+        ],
+        "jsx-a11y/label-has-associated-control": [ "error", {
+            "required": {
+                "some": [ "nesting", "id"  ]
+            }
+        }]
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"],
+                "moduleDirectory": ["node_modules", "src/"]
+            }
+        }
+    }
+}

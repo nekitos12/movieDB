@@ -1,26 +1,24 @@
 .app__wrapper {
-    padding: 13px 36px 0;
-    background: white;
-
+  padding: 13px 36px 0;
+  background: white;
 }
 
 .menu {
-
 }
-.menu .ant-tabs-nav{
-    margin: 0 auto !important;
-    width: fit-content;
+.menu .ant-tabs-nav {
+  margin: 0 auto !important;
+  width: fit-content;
 }
 
 .films__spinner {
-    width: 50px;
+  width: 50px;
 
-    margin: 0 auto;
+  margin: 0 auto;
 }
 
-.app-wrapper__inner{
-    min-height: calc(100vh - 78px);
-    box-sizing: border-box;
-    background:white;
-    padding-top: 20px;
+.app-wrapper__inner {
+  min-height: calc(100vh - 78px);
+  box-sizing: border-box;
+  background: white;
+  padding-top: 20px;
 }
