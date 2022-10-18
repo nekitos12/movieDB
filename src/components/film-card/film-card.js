@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 const classNames = require('classnames')
 
 export default class FilmCard extends React.Component {
-  static getCutText(text, maxLength = 150) {
+  getCutText = (text, maxLength = 150) => {
     const spaceBeforeCut = text.indexOf(' ', maxLength)
     return spaceBeforeCut > 0 ? `${text.slice(0, spaceBeforeCut)}...` : text
   }
