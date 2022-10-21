@@ -4,11 +4,16 @@ import PropTypes from 'prop-types'
 
 import FilmList from '../film-list'
 import FilmListPagination from '../film-list-pagination'
+import MySpinner from '../my-spinner'
+import SwapiService from '../../service/swapi-service'
 
 export default class RatedFilm extends Component {
   state = {
     currentPage: 1,
+    isLoading: true,
   }
+
+  swapiService = new SwapiService()
 
   componentDidMount() {
     this.giveRatedFilms = this.props.giveRatedFilms.bind(this)
@@ -38,22 +43,26 @@ export default class RatedFilm extends Component {
   }
 
   render() {
-    const { ratedFilms, currentPage } = this.state
+    const { ratedFilms, currentPage, isLoading } = this.state
     const { apiKey, guestSessionId } = this.props
     return (
       <div className="rated-films app-wrapper__inner">
-        <div className="rated-films__list">
-          <FilmList
-            filmData={ratedFilms || []}
-            postFilmRate={this.postFilmRate}
-            apiKey={apiKey}
-            guestSessionId={guestSessionId}
-            ratedFilms={ratedFilms}
-          />
-          {ratedFilms?.length ? (
-            <FilmListPagination onChange={this.onPageChange} defaultCurrent={currentPage} total={ratedFilms.length} />
-          ) : null}
-        </div>
+        {isLoading ? (
+          <MySpinner />
+        ) : (
+          <div className="rated-films__list">
+            <FilmList
+              filmData={ratedFilms || []}
+              postFilmRate={this.postFilmRate}
+              apiKey={apiKey}
+              guestSessionId={guestSessionId}
+              ratedFilms={ratedFilms}
+            />
+            {ratedFilms?.length ? (
+              <FilmListPagination onChange={this.onPageChange} defaultCurrent={currentPage} total={ratedFilms.length} />
+            ) : null}
+          </div>
+        )}
       </div>
     )
   }

@@ -42,7 +42,6 @@ FilmList.defaultProps = {
   filmData: [],
 }
 FilmList.propTypes = {
-  postFilmRate: PropTypes.func.isRequired,
   ratedFilms: PropTypes.array,
   filmData: PropTypes.array,
 }
